@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class DegreesPostControllerTests {
 
-    private static final String RESOURCE_URI = "/api/menu/catergories";
+    private static final String RESOURCE_URI = "/api/menu/categories";
 
     @Test
     void postReturnsStatusOfCreated(@Autowired MockMvc mockMvc) throws Exception {

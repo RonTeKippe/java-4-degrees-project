@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/menu/catergories")
+@RequestMapping("/api/menu/categories")
 public class DegreesPostController {
 
     @PostMapping
