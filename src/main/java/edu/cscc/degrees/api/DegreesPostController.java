@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.time.LocalDateTime;
+
 
 @RestController
 @RequestMapping("/api/menu/categories")
@@ -25,31 +25,17 @@ public class DegreesPostController {
     }
 
     @PostMapping
-    public ResponseEntity <MenuCategory> createBlogPost(
+    public ResponseEntity <MenuCategory> createMenuCategory(
             @RequestBody MenuCategory menuCategory, UriComponentsBuilder uriComponentsBuilder) {
-        menuCategory.setDatePosted(LocalDateTime.now());
+
         MenuCategory savedItem = menuCategoryRepository.save(menuCategory);
 
         UriComponents uriComponents =
                 uriComponentsBuilder.path("/api/menu/categories/{id}")
-                        .buildAndExpand(menuCategory.getId());
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", uriComponents.toUri().toString());
-        return new ResponseEntity<>(menuCategory, headers, HttpStatus.CREATED);
-    }
-
-    /**@PostMapping
-    public ResponseEntity<BlogPost> createBlogEntry(
-            @RequestBody BlogPost blogPost, UriComponentsBuilder uriComponentsBuilder) {
-        BlogPost savedItem = blogPostRepository.save(blogPost);
-        UriComponents uriComponents =
-                uriComponentsBuilder.path("/api/articles/{id}")
                         .buildAndExpand(savedItem.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", uriComponents.toUri().toString());
         return new ResponseEntity<>(savedItem, headers, HttpStatus.CREATED);
-    }**/
-
-
+    }
 
 }

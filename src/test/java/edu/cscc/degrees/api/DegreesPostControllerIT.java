@@ -22,7 +22,7 @@ public class DegreesPostControllerIT {
     private TestRestTemplate restTemplate;
     private static final String RESOURCE_URI = "http://localhost:%d/api/menu/categories";
     private static final MenuCategory testMenuCategory =
-            new MenuCategory(0L, "category", null, "title", "content");
+            new MenuCategory(0L, "category title", "category notes", 1);
 
     @Test
     @DisplayName("T01 - POSTed location includes server port when created")
@@ -48,13 +48,4 @@ public class DegreesPostControllerIT {
                 menuCategoryReturned.getId()), responseEntity.getHeaders().getLocation().toString());
     }
 
-    @Test
-    @DisplayName("T03 - POST automatically adds datePosted")
-    public void test_03() {
-        ResponseEntity<MenuCategory> responseEntity =
-                this.restTemplate.postForEntity(String.format(RESOURCE_URI, localServerPort),
-                        testMenuCategory, MenuCategory.class);
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody().getDatePosted());
-    }
 }
