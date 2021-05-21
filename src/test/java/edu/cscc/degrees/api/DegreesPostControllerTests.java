@@ -14,16 +14,21 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.mockito.Mockito.doReturn;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -66,6 +71,40 @@ public class DegreesPostControllerTests {
                 mockResponse.getHeader("Location"));
 
         verify(menuCategoryRepository, times(1)).save(any(MenuCategory.class));
+        verifyNoMoreInteractions(menuCategoryRepository);
+    }
+
+    @Test
+    @DisplayName("T02 - When no articles exist, GET returns an empty list")
+    public void getReturnsEmptyListWhenNoCategories(@Autowired MockMvc mockMvc) throws Exception {
+        when(menuCategoryRepository.findAll()).thenReturn(new ArrayList<MenuCategory>());
+        mockMvc.perform(get(RESOURCE_URI))
+                .andExpect(jsonPath("$.length()").value(0))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(menuCategoryRepository, times(1)).findAll();
+        verifyNoMoreInteractions(menuCategoryRepository);
+    }
+
+    @Test
+    @DisplayName("T03 - When one article exists, GET returns a list with it")
+    public void getReturnsAListWithOneCategoryWhenOneExists(@Autowired MockMvc mockMvc) throws Exception {
+        when(menuCategoryRepository.findAll()).
+                thenReturn(Collections.singletonList(savedMenuCategory));
+        mockMvc.perform(get(RESOURCE_URI))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath(
+                        "$.[0].id").value(savedMenuCategory.getId()))
+                .andExpect(jsonPath(
+                        "$.[0].categoryTitle").value(savedMenuCategory.getCategoryTitle()))
+                .andExpect(jsonPath(
+                        "$.[0].categoryNotes").value(savedMenuCategory.getCategoryNotes()))
+                .andExpect(
+                        jsonPath("$.[0].sortOrder").value(savedMenuCategory.getSortOrder()))
+                .andExpect(status().isOk());
+        verify(menuCategoryRepository, times(1)).findAll();
         verifyNoMoreInteractions(menuCategoryRepository);
     }
 }
