@@ -22,7 +22,7 @@ public class DegreesMenuItemControllerIT {
         private int localServerPort;
         @Autowired
         private TestRestTemplate restTemplate;
-        private static final String RESOURCE_URI = "http://localhost:%d/api/menu/categories";
+        private static final String RESOURCE_URI = "http://localhost:%d/api/menu/items";
         private static final MenuCategory testMenuCategory =
                 new MenuCategory(0L, "category title", "category notes", 1);
         private static final MenuItem testMenuItem =

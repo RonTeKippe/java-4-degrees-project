@@ -9,7 +9,6 @@ public class MenuItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
-    @JoinColumn(name = "menuCategory")
     private MenuCategory menuCategory;
     private String itemName;
     private String itemDescription;
