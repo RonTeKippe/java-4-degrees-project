@@ -2,6 +2,7 @@ package edu.cscc.degrees.api;
 
 
 import edu.cscc.degrees.domain.MenuCategory;
+import edu.cscc.degrees.domain.MenuItem;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
-public class DegreesPostControllerIT {
+public class DegreesMenuCategoryControllerIT {
     @LocalServerPort
     private int localServerPort;
     @Autowired
@@ -35,7 +36,7 @@ public class DegreesPostControllerIT {
                 responseEntity.getHeaders().getLocation().getPort());
     }
 
-    @Test
+       @Test
     @DisplayName("T02 - POST generates nonzero ID")
     public void test_02() {
         ResponseEntity<MenuCategory> responseEntity =
