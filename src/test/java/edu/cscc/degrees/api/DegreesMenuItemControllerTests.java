@@ -58,7 +58,7 @@ public class DegreesMenuItemControllerTests {
                 .andExpect(jsonPath(
                         "$.id").value(savedMenuItem.getId()))
                 .andExpect(jsonPath(
-                        "$.menuCategory").value(savedMenuItem.getMenuCategory()))
+                        "$.menuCategory.id").value(savedMenuItem.getMenuCategory().getId()))
                 .andExpect(jsonPath(
                         "$.itemName").value(savedMenuItem.getItemName()))
                 .andExpect(jsonPath(
@@ -99,17 +99,17 @@ public class DegreesMenuItemControllerTests {
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath(
-                        "$.id").value(savedMenuItem.getId()))
+                        "$.[0].id").value(savedMenuItem.getId()))
                 .andExpect(jsonPath(
-                        "$.menuCategory").value(savedMenuItem.getMenuCategory()))
+                        "$.[0].menuCategory.id").value(savedMenuItem.getMenuCategory().getId()))
                 .andExpect(jsonPath(
-                        "$.itemName").value(savedMenuItem.getItemName()))
+                        "$.[0].itemName").value(savedMenuItem.getItemName()))
                 .andExpect(jsonPath(
-                        "$.itemDescription").value(savedMenuItem.getItemDescription()))
+                        "$.[0].itemDescription").value(savedMenuItem.getItemDescription()))
                 .andExpect(jsonPath(
-                        "$.itemPrice").value(savedMenuItem.getItemPrice()))
+                        "$.[0].itemPrice").value(savedMenuItem.getItemPrice()))
                 .andExpect(
-                        jsonPath("$.sortOrder").value(savedMenuItem.getSortOrder()))
+                        jsonPath("$.[0].sortOrder").value(savedMenuItem.getSortOrder()))
                 .andExpect(status().isOk());
         verify(menuItemRepository, times(1)).findAll();
         verifyNoMoreInteractions(menuItemRepository);
@@ -135,17 +135,17 @@ public class DegreesMenuItemControllerTests {
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath(
-                "$.id").value(savedMenuItem.getId()))
+                "$.[0].id").value(savedMenuItem.getId()))
                 .andExpect(jsonPath(
-                        "$.menuCategory").value(savedMenuItem.getMenuCategory()))
+                        "$.[0].menuCategory.id").value(savedMenuItem.getMenuCategory().getId()))
                 .andExpect(jsonPath(
-                        "$.itemName").value(savedMenuItem.getItemName()))
+                        "$.[0].itemName").value(savedMenuItem.getItemName()))
                 .andExpect(jsonPath(
-                        "$.itemDescription").value(savedMenuItem.getItemDescription()))
+                        "$.[0].itemDescription").value(savedMenuItem.getItemDescription()))
                 .andExpect(jsonPath(
-                        "$.itemPrice").value(savedMenuItem.getItemPrice()))
+                        "$.[0].itemPrice").value(savedMenuItem.getItemPrice()))
                 .andExpect(
-                        jsonPath("$.sortOrder").value(savedMenuItem.getSortOrder()))
+                        jsonPath("$.[0].sortOrder").value(savedMenuItem.getSortOrder()))
                 .andExpect(status().isOk());
         verify(menuItemRepository, times(1)).findById(anyLong());
         verifyNoMoreInteractions(menuItemRepository);

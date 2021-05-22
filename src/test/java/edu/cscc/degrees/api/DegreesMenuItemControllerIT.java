@@ -2,6 +2,7 @@ package edu.cscc.degrees.api;
 
 import edu.cscc.degrees.domain.MenuCategory;
 import edu.cscc.degrees.domain.MenuItem;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,15 @@ public class DegreesMenuItemControllerIT {
         private static final MenuItem testMenuItem =
                 new MenuItem(0L, testMenuCategory, "item name", "item decription", "item price", 1);
 
-        @Test
+
+    @BeforeEach
+    void setUp() {
+        ResponseEntity<MenuCategory> responseEntity =
+                this.restTemplate.postForEntity(String.format(RESOURCE_URI,
+                        localServerPort), testMenuCategory, MenuCategory.class);
+    }
+
+    @Test
         @DisplayName("T01 - POSTed location includes server port when created")
         public void test_01() {
             ResponseEntity<MenuItem> responseEntity =
