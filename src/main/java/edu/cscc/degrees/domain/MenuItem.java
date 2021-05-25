@@ -1,6 +1,9 @@
 package edu.cscc.degrees.domain;
 
+
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 public class MenuItem {
@@ -8,11 +11,23 @@ public class MenuItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @ManyToOne
+    @NotNull(message = "menuCategory is required")
     private MenuCategory menuCategory;
+
+    @NotNull
+    @Size(min = 1, max = 80,
+            message = "Please enter a name up to 80 characters in length")
     private String itemName;
     private String itemDescription;
+
+    @NotNull
+    @Size(min = 1, max = 20,
+            message = "Please enter a price up to 80 characters in length")
     private String itemPrice;
+
+    @NotNull(message = "sortOrder is required")
     private int sortOrder;
 
     public MenuItem() {

@@ -203,4 +203,46 @@ public class DegreesMenuCategoryControllerTests {
         verify(menuCategoryRepository, times(1)).findById(1L);
         verifyNoMoreInteractions(menuCategoryRepository);
     }
+
+    @Test
+    @DisplayName("T11 - POST returns 400 if required properties are not set")
+    public void PostReturns400IfMenuCategoryIsMissingFields(@Autowired MockMvc mockMvc) throws Exception {
+
+        mockMvc.perform(post(RESOURCE_URI)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(new MenuCategory())))
+                .andExpect(status().isBadRequest());
+        verify(menuCategoryRepository, never()).save(any(MenuCategory.class));
+        verifyNoMoreInteractions(menuCategoryRepository);
+    }
+
+    @Test
+    @DisplayName("T12 - POST returns null value error messages")
+    public void postReturnsNullValueErrorMessages(@Autowired MockMvc mockMvc) throws Exception {
+
+        mockMvc.perform(post(RESOURCE_URI)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(new MenuCategory())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.fieldErrors.categoryTitle").value("must not be null"))
+                .andExpect(jsonPath("$.fieldErrors.sortOrder").value("must not be null"));
+        verify(menuCategoryRepository, never()).save(any(MenuCategory.class));
+        verifyNoMoreInteractions(menuCategoryRepository);
+    }
+
+    @Test
+    @DisplayName("T12b - POST returns returns the correct error messages")
+    public void postReturnsCorrectErrorMessages(@Autowired MockMvc mockMvc) throws Exception {
+
+        mockMvc.perform(post(RESOURCE_URI)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(new MenuCategory(0L,"", "category notes", 1))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.fieldErrors.categoryTitle").value(
+                        "Please enter a category title up to 80 characters in length"));
+        verify(menuCategoryRepository, never()).save(any(MenuCategory.class));
+        verifyNoMoreInteractions(menuCategoryRepository);
+    }
+
+
 }
