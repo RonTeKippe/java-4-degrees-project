@@ -1,24 +1,39 @@
 package edu.cscc.degrees.domain;
 
+
+
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 public class MenuItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
     @ManyToOne
+    @NotNull(message = "menuCategory is required")
     private MenuCategory menuCategory;
+
+    @NotNull
+    @Size(min = 1, max = 80,
+            message = "Please enter a name up to 80 characters in length")
     private String itemName;
     private String itemDescription;
+
+    @NotNull
+    @Size(min = 1, max = 20,
+            message = "Please enter a price up to 80 characters in length")
     private String itemPrice;
-    private int sortOrder;
+
+    @NotNull(message = "sortOrder is required")
+    private Integer sortOrder;
 
     public MenuItem() {
     }
 
-    public MenuItem(long id, MenuCategory menuCategory, String itemName, String itemDescription, String itemPrice, int sortOrder) {
+    public MenuItem(Long id, MenuCategory menuCategory, String itemName, String itemDescription, String itemPrice, Integer sortOrder) {
         this.id = id;
         this.menuCategory = menuCategory;
         this.itemName = itemName;
@@ -27,11 +42,11 @@ public class MenuItem {
         this.sortOrder = sortOrder;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,11 +82,11 @@ public class MenuItem {
         this.itemPrice = itemPrice;
     }
 
-    public int getSortOrder() {
+    public Integer getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(int sortOrder) {
+    public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
     }
 }

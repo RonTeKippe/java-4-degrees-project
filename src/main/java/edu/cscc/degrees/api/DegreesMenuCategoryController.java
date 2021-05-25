@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class DegreesMenuCategoryController {
 
     @PostMapping
     public ResponseEntity <MenuCategory> createMenuCategory(
-            @RequestBody MenuCategory menuCategory, UriComponentsBuilder uriComponentsBuilder) {
+            @Valid @RequestBody MenuCategory menuCategory, UriComponentsBuilder uriComponentsBuilder) {
 
         MenuCategory savedItem = menuCategoryRepository.save(menuCategory);
 
@@ -55,7 +56,7 @@ public class DegreesMenuCategoryController {
 
     @PutMapping("{id}")
     public ResponseEntity<MenuCategory> updateMenuCategoryEntry(@PathVariable Long id,
-                                                        @RequestBody MenuCategory menuCategory) {
+                                                                @Valid @RequestBody MenuCategory menuCategory) {
         if (menuCategory.getId() != id) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

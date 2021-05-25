@@ -1,6 +1,9 @@
 package edu.cscc.degrees.domain;
 
+
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -10,17 +13,23 @@ public class MenuCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
+
+    @NotNull
+    @Size(min = 1, max = 80,
+        message = "Please enter a category title up to 80 characters in length")
     private String categoryTitle;
     private String categoryNotes;
-    private int sortOrder;
+
+    @NotNull(message = "sortOrder is required")
+    private Integer sortOrder;
 
 
 
     public MenuCategory() {
     }
 
-    public MenuCategory(long id, String categoryTitle, String categoryNotes, int sortOrder) {
+    public MenuCategory(Long id, String categoryTitle, String categoryNotes, Integer sortOrder) {
         this.id = id;
         this.categoryTitle = categoryTitle;
         this.categoryNotes = categoryNotes;
@@ -28,11 +37,11 @@ public class MenuCategory {
     }
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,11 +61,11 @@ public class MenuCategory {
         this.categoryNotes = title;
     }
 
-    public int getSortOrder() {
+    public Integer getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(int sortOrder) {
+    public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
     }
 }
