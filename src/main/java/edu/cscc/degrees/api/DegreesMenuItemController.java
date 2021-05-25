@@ -59,7 +59,7 @@ public class DegreesMenuItemController {
 
     @PutMapping("{id}")
     public ResponseEntity<MenuItem> updateMenuItemEntry(@PathVariable Long id,
-                                                                @RequestBody MenuItem menuItem) {
+                                                        @Valid @RequestBody MenuItem menuItem) {
         if (menuItem.getId() != id) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

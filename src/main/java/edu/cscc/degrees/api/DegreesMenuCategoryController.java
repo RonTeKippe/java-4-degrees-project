@@ -56,7 +56,7 @@ public class DegreesMenuCategoryController {
 
     @PutMapping("{id}")
     public ResponseEntity<MenuCategory> updateMenuCategoryEntry(@PathVariable Long id,
-                                                        @RequestBody MenuCategory menuCategory) {
+                                                                @Valid @RequestBody MenuCategory menuCategory) {
         if (menuCategory.getId() != id) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

@@ -259,6 +259,38 @@ public class DegreesMenuItemControllerTests {
         verifyNoMoreInteractions(menuItemRepository);
     }
 
+    @Test
+    @DisplayName("T12c - PUT returns null value error messages")
+    public void putReturnsNullValueErrorMessages(@Autowired MockMvc mockMvc) throws Exception {
+
+        mockMvc.perform(put(RESOURCE_URI + "/10")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(new MenuItem())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.fieldErrors.menuCategory").value("menuCategory is required"))
+                .andExpect(jsonPath("$.fieldErrors.itemName").value("must not be null"))
+                .andExpect(jsonPath("$.fieldErrors.itemPrice").value("must not be null"))
+                .andExpect(jsonPath("$.fieldErrors.sortOrder").value("sortOrder is required"));
+        verify(menuItemRepository, never()).save(any(MenuItem.class));
+        verifyNoMoreInteractions(menuItemRepository);
+    }
+
+    @Test
+    @DisplayName("T12d - PUT returns returns the correct error messages")
+    public void putReturnsCorrectErrorMessages(@Autowired MockMvc mockMvc) throws Exception {
+
+        mockMvc.perform(put(RESOURCE_URI + "/10")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(new MenuItem(10L,testMenuCategory, "", "item decription", "", 1))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.fieldErrors.itemName").value(
+                        "Please enter a name up to 80 characters in length"))
+                .andExpect(jsonPath("$.fieldErrors.itemPrice").value(
+                        "Please enter a price up to 80 characters in length"));
+        verify(menuItemRepository, never()).save(any(MenuItem.class));
+        verifyNoMoreInteractions(menuItemRepository);
+    }
+
 
 
 }
