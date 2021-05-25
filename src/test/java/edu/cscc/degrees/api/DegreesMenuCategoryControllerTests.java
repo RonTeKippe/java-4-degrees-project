@@ -225,7 +225,7 @@ public class DegreesMenuCategoryControllerTests {
                 .content(mapper.writeValueAsString(new MenuCategory())))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.fieldErrors.categoryTitle").value("must not be null"))
-                .andExpect(jsonPath("$.fieldErrors.sortOrder").value("must not be null"));
+                .andExpect(jsonPath("$.fieldErrors.sortOrder").value("sortOrder is required"));
         verify(menuCategoryRepository, never()).save(any(MenuCategory.class));
         verifyNoMoreInteractions(menuCategoryRepository);
     }

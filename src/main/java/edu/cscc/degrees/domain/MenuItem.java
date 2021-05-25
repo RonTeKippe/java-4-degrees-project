@@ -10,7 +10,7 @@ public class MenuItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @NotNull(message = "menuCategory is required")
@@ -28,12 +28,12 @@ public class MenuItem {
     private String itemPrice;
 
     @NotNull(message = "sortOrder is required")
-    private int sortOrder;
+    private Integer sortOrder;
 
     public MenuItem() {
     }
 
-    public MenuItem(long id, MenuCategory menuCategory, String itemName, String itemDescription, String itemPrice, int sortOrder) {
+    public MenuItem(Long id, MenuCategory menuCategory, String itemName, String itemDescription, String itemPrice, Integer sortOrder) {
         this.id = id;
         this.menuCategory = menuCategory;
         this.itemName = itemName;
@@ -42,11 +42,11 @@ public class MenuItem {
         this.sortOrder = sortOrder;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -82,11 +82,11 @@ public class MenuItem {
         this.itemPrice = itemPrice;
     }
 
-    public int getSortOrder() {
+    public Integer getSortOrder() {
         return sortOrder;
     }
 
-    public void setSortOrder(int sortOrder) {
+    public void setSortOrder(Integer sortOrder) {
         this.sortOrder = sortOrder;
     }
 }
