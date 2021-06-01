@@ -1,6 +1,7 @@
 package edu.cscc.degrees.api;
 
 
+import edu.cscc.degrees.data.MenuCategoryRepository;
 import edu.cscc.degrees.data.MenuItemRepository;
 
 import edu.cscc.degrees.domain.MenuCategory;
@@ -17,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.awt.print.Pageable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -59,19 +61,6 @@ public class DegreesMenuItemController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    /**@GetMapping("{menuCategory}")
-    public ResponseEntity<Iterable<MenuItem>> getAllItemsInACategory(
-            @PathVariable MenuCategory menuCategory) {
-        Pageable allItemsInACategory = new PageRequest(0, 5);
-        Optional<MenuItem> searchResult = menuItemRepository.findAllByMenuCategory(menuCategory, allItemsInACategory);
-        if (searchResult.isPresent()) {
-            return new ResponseEntity<>(
-                    searchResult, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }**/
-
 
     @PutMapping("{id}")
     public ResponseEntity<MenuItem> updateMenuItemEntry(@PathVariable Long id,
