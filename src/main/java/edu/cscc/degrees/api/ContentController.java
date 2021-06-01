@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,18 +31,16 @@ public class ContentController {
     }
 
     @GetMapping("/public/api/menus")
-    public ResponseEntity<Iterable<MenuItemList>> getAllItemsInACategory(
+    public Iterable<MenuItemList> getAllItemsInACategory()
         {
-          // MenuCategoryRepository.
+          Iterable<MenuCategory> menuCategories = menuCategoryRepository.findAll(Sort.by("sortOrder", "categoryTitle"));
 
-                List<MenuItemList> searchResult = menuItemRepository.findByMenuCategoryOrderBySortOrderAscNameAsc();
-        if (searchResult.isPresent()) {
-            return new ResponseEntity<>(
-                    searchResult, HttpStatus.OK);
+          List<MenuItemList> searchResult = new ArrayList<>();
+          menuCategories.forEach(menuCategory ->  {
+             searchResult = menuItemRepository.findByMenuCategoryOrderBySortOrderAscNameAsc(menuCategory);
+          });
+            return searchResult;
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
 
-    List<MenuCategory> menuCategoryList = MenuCategoryRepository.class.
 
 }
