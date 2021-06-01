@@ -35,9 +35,13 @@ public class ContentController {
         {
           Iterable<MenuCategory> menuCategories = menuCategoryRepository.findAll(Sort.by("sortOrder", "categoryTitle"));
 
-          List<MenuItemList> searchResult = new ArrayList<>();
+          List<MenuItemList>
+                  searchResult = new ArrayList<>();
           menuCategories.forEach(menuCategory ->  {
-             searchResult = menuItemRepository.findByMenuCategoryOrderBySortOrderAscNameAsc(menuCategory);
+              MenuItemList menuItemList = new MenuItemList();
+              menuItemList.setMenuCategory(menuCategory);
+              menuItemList.setMenuItemList(menuItemRepository.findByMenuCategoryOrderBySortOrderAscNameAsc(menuCategory));
+              searchResult.add(menuItemList);
           });
             return searchResult;
         }
