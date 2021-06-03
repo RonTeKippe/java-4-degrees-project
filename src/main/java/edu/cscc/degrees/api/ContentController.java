@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 public class ContentController {
@@ -40,7 +40,7 @@ public class ContentController {
           menuCategories.forEach(menuCategory ->  {
               MenuItemList menuItemList = new MenuItemList();
               menuItemList.setMenuCategory(menuCategory);
-              menuItemList.setMenuItemList(menuItemRepository.findByMenuCategoryOrderBySortOrderAscNameAsc(menuCategory));
+              menuItemList.setMenuItemList(menuItemRepository.findByMenuCategoryOrderBySortOrderAscItemNameAsc(menuCategory));
               searchResult.add(menuItemList);
           });
             return searchResult;

@@ -11,5 +11,5 @@ import java.util.List;
 
 public interface MenuItemRepository extends PagingAndSortingRepository<MenuItem, Long> {
 
-    List<MenuItem>  findByMenuCategoryOrderBySortOrderAscNameAsc(MenuCategory menuCategory);
+    List<MenuItem>  findByMenuCategoryOrderBySortOrderAscItemNameAsc(MenuCategory menuCategory);
 }
