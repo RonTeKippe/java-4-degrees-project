@@ -1,9 +1,12 @@
 package edu.cscc.degrees.api;
 
 
+import edu.cscc.degrees.data.MenuCategoryRepository;
 import edu.cscc.degrees.data.MenuItemRepository;
 
+import edu.cscc.degrees.domain.MenuCategory;
 import edu.cscc.degrees.domain.MenuItem;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 
 import org.springframework.http.HttpStatus;
@@ -13,7 +16,9 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.awt.print.Pageable;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @RestController

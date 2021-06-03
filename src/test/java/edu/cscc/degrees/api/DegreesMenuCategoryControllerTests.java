@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.mockito.Mockito.doReturn;
@@ -146,6 +148,7 @@ public class DegreesMenuCategoryControllerTests {
         when(menuCategoryRepository.existsById(10L)).thenReturn(false);
         mockMvc.perform(put(RESOURCE_URI + "/10")
                 .contentType(MediaType.APPLICATION_JSON)
+
                 .content(mapper.writeValueAsString(
                         new MenuCategory(10L,"category title", "category notes", 1))))
                 .andExpect(status().isNotFound());
@@ -243,6 +246,19 @@ public class DegreesMenuCategoryControllerTests {
         verify(menuCategoryRepository, never()).save(any(MenuCategory.class));
         verifyNoMoreInteractions(menuCategoryRepository);
     }
+
+    @Test
+    @DisplayName("T13 - Get requests have proper CORS headers")
+    public void getRequestIncludesCorsHeaders (@Autowired MockMvc mockMvc) throws Exception {
+        when(menuCategoryRepository.findAll()).
+                thenReturn(Collections.singletonList(savedMenuCategory));
+        mockMvc.perform(get(RESOURCE_URI))
+                .andExpect(status().isOk()).andExpect(
+                header().stringValues(HttpHeaders.VARY,
+                        hasItems("Origin", "Access-Control-Request-Method",
+                                "Access-Control-Request-Headers")));
+    }
+
 
 
 }
